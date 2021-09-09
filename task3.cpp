@@ -13,14 +13,16 @@ int main(){
     cout << "Enter fish:\n";
     cin >> fish;
     int countFishing = 0;
+    int counter = 1;
     while (!river.eof()){
         string getFish;
         river >> getFish;
         if (getFish == fish) {
-            basket << fish << '\n';
+            for (; counter > 0; counter--) basket << fish << ' ';
             countFishing++;
         }
     }
+    basket << countFishing << " sum." << '\n';
     cout << countFishing;
     return 0;
 }
