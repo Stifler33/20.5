@@ -20,7 +20,7 @@ void initFile(int countStr = 1000){
         }else if (i == 1){
             init << "a0      \n";
         }else if (i == 2){
-            init << "n                     \n";
+            init << "n                         \n";
         }else if (i < countStr - 1){
             init << "m    \n";
         }else init << "q";
@@ -161,46 +161,44 @@ void getMoney(int summ = 0){
         if (summ % 100 == 0){
             //5000
             while (numberBills[0] != 0 && (summ / 5000 > 0)){
+                note[0]++;
                 summ -= 5000;
                 numberBills[0]--;
             }
-            if (numberBills[0] != 0) {
-                note[0] = summ / 5000;
-                summ -= note[0] * 5000;
-                if (note[0] != 0) numberBills[0] -= note[0];
-            }
             //2000
-            if (numberBills[1] != 0) {
-                note[1] = summ / 2000;
-                summ -= note[1] * 2000;
-                if (note[1] != 0) numberBills[1] -= note[1];
+            while (numberBills[1] != 0 && (summ / 2000 > 0)){
+                note[1]++;
+                summ -= 2000;
+                numberBills[1]--;
             }
             //1000
-            if (numberBills[2] != 0) {
-                note[2] = summ / 1000;
-                summ -= note[2] * 1000;
-                if (note[2] != 0) numberBills[2] -= note[2];
+            while (numberBills[2] != 0 && (summ / 1000 > 0)){
+                note[2]++;
+                summ -= 1000;
+                numberBills[2]--;
             }
             //500
-            if (numberBills[3] != 0) {
-                note[3] = summ / 500;
-                summ -= note[3] * 500;
-                if (note[3] != 0) numberBills[3] -= note[3];
+            while (numberBills[3] != 0 && (summ / 500 > 0)){
+                note[3]++;
+                summ -= 500;
+                numberBills[3]--;
             }
             //200
-            if (numberBills[4] != 0) {
-                note[4] = summ / 200;
-                summ -= note[4] * 200;
-                if (note[4] != 0) numberBills[4] -= note[4];
+            while (numberBills[4] != 0 && (summ / 200 > 0)){
+                note[4]++;
+                summ -= 200;
+                numberBills[4]--;
             }
             //100
-            if (numberBills[5] != 0) {
-                note[5] = summ / 100;
-                summ -= note[5] * 100;
-                if (note[5] != 0) numberBills[5] -= note[5];
+            while (numberBills[5] != 0 && (summ / 100 > 0)){
+                note[5]++;
+                summ -= 100;
+                numberBills[5]--;
             }
         }else std::cout << "incorrect sum\n";
     }else if (summ > allSumMoney) std::cout << "sum big\n";
+    get.seekp(16,ios::beg);
+    get << "n                         ";
     get.seekp(16,ios::beg);
     for (int i = 0; i < size(numberBills); i++){
         get << numberBills[i] << " ";
@@ -226,7 +224,7 @@ void getMoney(int summ = 0){
                     get << "0      ";
                     get.seekp(7, ios::beg);
                     get << allSumMoney;
-                    vecMoney.pop_back();
+                    vecMoney.erase(vecMoney.begin()+i);
                     get.seekp(posCur, ios::beg);
                     get << "0   ";
                     break;
@@ -244,7 +242,7 @@ int main() {
     cout << "enter action:\n";
     cin >> userAns;
     if (userAns == "init"){
-        initFile(20);
+        initFile(1000);
     }
     if (userAns == "add"){
         addMoney();
