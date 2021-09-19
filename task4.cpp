@@ -149,6 +149,10 @@ void getMoney(int summ = 0){
     for (int i = 0; i < size(numberBills); i++){
         get >> numberBills[i];
     }
+    if (allSumMoney <= 0){
+        cout << "ATM empty !\n";
+        return;
+    }
     cout << "Enter sum money :\n";
     std::cin >> summ;
     /*
@@ -259,7 +263,7 @@ int main() {
     cout << "enter action:\n";
     cin >> userAns;
     if (userAns == "init"){
-        initFile(10);
+        initFile(1000);
     }
     if (userAns == "add"){
         addMoney();
