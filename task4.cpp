@@ -20,7 +20,7 @@ void initFile(int countStr = 1000){
         }else if (i == 1){
             init << "a0      \n";
         }else if (i == 2){
-            init << "n                         \n";
+            init << "n                       \n";
         }else if (i < countStr - 1){
             init << "m    \n";
         }else init << "q";
@@ -30,7 +30,10 @@ void initFile(int countStr = 1000){
 }
 void addMoney(){
     fstream atm("D:\\ATM\\money.bin", ios_base::binary | ios::in | ios::out);
-    atm.is_open() ? cout << "file open !\n" : cout << "Error open file !\n";
+    if (!atm.is_open()){
+        cout << "Error open file !\n";
+        return;
+    }
     char sy;
     int numberBills[6] = {0};
     /*
@@ -86,7 +89,9 @@ void addMoney(){
     atm << allSumMoney;
     atm.seekp(16,ios::beg);
     for (int i = 0; i < size(numberBills); i++){
-        atm << numberBills[i] << " ";
+        if (i == 5){
+            atm << numberBills[i];
+        }else atm << numberBills[i] << " ";
     }
     atm.close();
 }
@@ -195,13 +200,21 @@ void getMoney(int summ = 0){
                 summ -= 100;
                 numberBills[5]--;
             }
-        }else std::cout << "incorrect sum\n";
-    }else if (summ > allSumMoney) std::cout << "sum big\n";
-    get.seekp(16,ios::beg);
-    get << "n                         ";
+        }else {
+            std::cout << "incorrect sum\n";
+            return;
+        }
+    }else if (summ > allSumMoney) {
+        std::cout << "sum big\n";
+        return;
+    }
+    get.seekp(15,ios::beg);
+    get << "n                       ";
     get.seekp(16,ios::beg);
     for (int i = 0; i < size(numberBills); i++){
-        get << numberBills[i] << " ";
+        if (i == 5){
+            get << numberBills[i];
+        }else get << numberBills[i] << " ";
     }
     vector<int> vecMoney;
     initVecMoney(note, size(note), vecMoney);
@@ -246,8 +259,7 @@ int main() {
     }
     if (userAns == "add"){
         addMoney();
-        cout << "Total money in ATM :\n";
-        cout << allSumMoney;
+        cout << "Total money in ATM: " << allSumMoney << endl;
     }
     if (userAns == "get"){
         getMoney();
