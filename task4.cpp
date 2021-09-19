@@ -208,6 +208,10 @@ void getMoney(int summ = 0){
         std::cout << "sum big\n";
         return;
     }
+    if (summ > 0){
+        cout << "the specified amount cannot be dispensed\n";
+        return;
+    }
     get.seekp(15,ios::beg);
     get << "n                       ";
     get.seekp(16,ios::beg);
@@ -255,7 +259,7 @@ int main() {
     cout << "enter action:\n";
     cin >> userAns;
     if (userAns == "init"){
-        initFile(1000);
+        initFile(10);
     }
     if (userAns == "add"){
         addMoney();
